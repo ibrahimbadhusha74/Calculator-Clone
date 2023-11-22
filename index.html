@@ -1,0 +1,119 @@
+<html>
+
+<head>
+</head>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        width: 80;
+        height: 80;
+        border: solid;
+        font-size: 25;
+    }
+
+    .textinput {
+        width: 345px;
+        height: 50;
+        font-size: 25;
+        color: black;
+        border: solid;
+        display: flex;
+        text-align: end;
+    }
+
+    .main {
+        position: absolute;
+        border: solid 4px;
+        background: linear-gradient(grey, rgb(32, 29, 29));
+    }
+</style>
+
+<body>
+    <div class=main>
+        <!-- <h1>HTML Calculator</h1> -->
+        <form name="form">
+            <input name="textinput" class="textinput" />
+        </form>
+        <table>
+            <tr>
+                <td><button onclick="clean()">C</button></td>
+                <td><button onclick="back()">DEL</button></td>
+                <td><button onclick="insert('*')">*</button></td>
+                <td><button onclick="insert('/')">/</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insert(1)">1</button></td>
+                <td><button onclick="insert(2)">2</button></td>
+                <td><button onclick="insert(3)">3</button></td>
+                <td><button onclick="insert('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insert(4)">4</button></td>
+                <td><button onclick="insert(5)">5</button></td>
+                <td><button onclick="insert(6)">6</button></td>
+                <td><button onclick="insert('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="insert(7)">7</button></td>
+                <td><button onclick="insert(8)">8</button></td>
+                <td><button onclick="insert(9)">9</button></td>
+                <td rowspan=2><button style="height: 165" onclick="calculate()">=</button></td>
+            </tr>
+            <tr>
+                <td colspan=2><button style="width:164" onclick="insert(0)">0</button></td>
+                <td><button onclick="insert('.')">.</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
+<script>
+    // function insert(num) {
+    //     document.form.textinput.value = document.form.textinput.value + num;
+    // }
+
+    function clean() {
+        // clean input area
+        document.form.textinput.value = "";
+    }
+
+    function back() {
+        var text = document.form.textinput.value
+        // remove last character from string
+        document.form.textinput.value = text.substring(0, text.length - 1)
+    }
+
+    function calculate() {
+        // eval calculation
+        var text = document.form.textinput.value
+        document.form.textinput.value = eval(text)
+    }
+
+    function insert(num) {
+        var currentInput = document.form.textinput.value;
+
+        // Check if the last character is an operator
+        var lastCharIsOperator = isOperator(currentInput.charAt(currentInput.length - 1));
+
+        // If the last character is an operator and the new input is also an operator, replace the last one
+        if (lastCharIsOperator && isOperator(num)) {
+            document.form.textinput.value = currentInput.substring(0, currentInput.length - 1) + num;
+        } else {
+            // Otherwise, append the new input
+            document.form.textinput.value = currentInput + num;
+        }
+    }
+
+    // Function to check if a character is an operator
+    function isOperator(char) {
+        var operators = ['+', '-', '*', '/', '%'];
+        return operators.includes(char);
+    }
+
+</script>
